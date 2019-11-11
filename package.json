@@ -1,0 +1,22 @@
+{
+  "name": "zkt_data_migration",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sliu2200899/zkt_data_migration.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sliu2200899/zkt_data_migration/issues"
+  },
+  "homepage": "https://github.com/sliu2200899/zkt_data_migration#readme",
+  "dependencies": {
+    "moment": "^2.24.0"
+  }
+}
