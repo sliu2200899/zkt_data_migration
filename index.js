@@ -48,9 +48,9 @@ SyncTime=0
 ServerVer=IIS5+
 ATTLOGStamp=0
 OPERLOGStamp=0
-ATTPHOTOStamp=0`
-
-    const logLine = `${deviceSerialNumber} initialization ${optionType} ${responseText}`
+ATTPHOTOStamp=0
+`
+    const logLine = `${deviceSerialNumber} initialization: ${responseText}`
     fs.appendFile('devicelog.txt', logLine, function (err) {
         if (err) {
             log.println("Error initializing clocks with server: ", err)
