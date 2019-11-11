@@ -93,7 +93,8 @@ const logData = (req, onSuccess)=>{
     const dataRow = req.query.Stamp
     //TODO: Extracts parts of the dataRow and save in the database
     
-    const logLine = `${serialNumber} ${req.query}\n`
+    queryContent = JSON.stringify(req.query())
+    const logLine = `${serialNumber} ${queryContent}\n`
     console.log(logLine);
 
 
