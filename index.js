@@ -14,12 +14,13 @@ app.use(function (req, res, next) {
     next()
 })
 
+//Index website
 app.get("/", (req, res)=> {
     const data = fs.readFileSync("devicelog.txt")
     res.send(data)
 })
 
-//Load device settings from the server
+//Initial Load device settings from the server
 app.get("/iclock/cdata", (req, res)=>{
     const deviceSerialNumber = req.query['SN'];
     const optionType = req.query['type'];
@@ -41,16 +42,26 @@ TransInterval=1
 TransFlag=TransData AttLog	OpLog	EnrollUser	EnrollFP	ChgUser	ChgFP	AttPhoto	EnrollFACE
 Realtime=1
 Encrypt=0
-TimeZone=-05:00
+TimeZone=-08:00
 Timeout=60
 SyncTime=0
 ServerVer=IIS5+
 ATTLOGStamp=0
 OPERLOGStamp=0
 ATTPHOTOStamp=0`
-    res.send(responseText.trim())
+
+    const logLine = `${deviceSerialNumber} initialization ${optionType} ${responseText}`
+    fs.appendFile('devicelog.txt', logLine, function (err) {
+        if (err) {
+            log.println("Error initializing clocks with server: ", err)
+            return
+        }
+        res.send(responseText.trim())
+    });
 })
 
+
+//Sync data with server
 //Device logs data in the server
 app.post("/iclock/cdata", (req, res)=>{
     logData(req,()=>{
