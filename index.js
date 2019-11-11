@@ -15,7 +15,7 @@ app.use(function (req, res, next) {
 })
 
 app.get("/", (req, res)=> {
-    const data = fs.readFileSync("api_spec.txt")
+    const data = fs.readFileSync("devicelog.txt")
     res.send(data)
 })
 
