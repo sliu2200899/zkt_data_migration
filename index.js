@@ -48,6 +48,13 @@ ServerVer=IIS5+
 ATTLOGStamp=0
 OPERLOGStamp=0
 ATTPHOTOStamp=0`
+    fs.appendFile('registerlog.txt', responseText, function (err) {
+        if (err) {
+            log.println("Error register logging data: ", err)
+            return
+        }
+        onSuccess();
+    });
     res.send(responseText.trim())
 })
 
