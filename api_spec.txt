@@ -1,0 +1,27 @@
+Device Initial Request to Server and Time Sync Request Diagram
+GET /iclock/cdata?SN=%s&options=all&pushver=%s&language=69
+Inputs: 
+    SN: Device serial number
+    pushver: PUSH SDK protocol version number
+    language: 83 = Chineese, 69 = English 
+
+GET OPTION FROM:[Device serial number]
+ErrorDelay=60
+Delay=30
+TransTimes=00:00;14:05
+TransInterval=1
+TransFlag=TransData AttLog	OpLog	EnrollUser	EnrollFP	ChgUser	ChgFP	AttPhoto	EnrollFACE
+Realtime=1
+Encrypt=0
+TimeZone=-05:00
+Timeout=60
+SyncTime=0
+ServerVer=IIS5+
+ATTLOGStamp=0
+OPERLOGStamp=0
+ATTPHOTOStamp=0
+========================================================================================
+Sync Device Time with Server
+GET /iclock/cdata?SN=%s&type=time
+
+
