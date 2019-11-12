@@ -13,8 +13,9 @@ var upload = multer()
 
 //set all responses to text/plain
 app.use(function (req, res, next) {
-    console.log("Request: ", req)
-    res.type("text/plain")
+    console.log("Request: ", req.query)
+    console.log("URL: ", req.url)
+    res.type("text/html")
     next()
 })
 
@@ -46,7 +47,7 @@ ErrorDelay=60
 Delay=30
 TransTimes=00:00;14:05
 TransInterval=1
-TransFlag=1111111000
+TransFlag=TransData AttLog	OpLog	EnrollUser	EnrollFp	ChgUser	ChgFP	AttPhoto	EnrollFACE
 Realtime=1
 Encrypt=0
 TimeZone=-08:00
@@ -99,10 +100,12 @@ const logData = (req, onSuccess)=>{
     const table = req.query.table
     const dataRow = req.query.Stamp
     //TODO: Extracts parts of the dataRow and save in the database
-    
+
+    const arr = dataRow.split('\t');
+    let pin = arr[0];
+    let other = arr[1];    
     const bodyContent = JSON.stringify(req.body)
-    console.log(req)
-    const logLine = `${serialNumber} ${table} ${dataRow} ${bodyContent}\n`
+    const logLine = `${serialNumber} ${table} ${dataRow} ${other}\n`
     console.log(logLine);
 
     fs.appendFile('devicelog.txt', logLine, function (err) {
