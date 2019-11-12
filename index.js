@@ -44,7 +44,7 @@ ErrorDelay=60
 Delay=30
 TransTimes=00:00;14:05
 TransInterval=1
-TransFlag=TransData AttLog	OpLog	EnrollUser	EnrollFP	ChgUser	ChgFP	AttPhoto	EnrollFACE
+TransFlag=1111111000
 Realtime=1
 Encrypt=0
 TimeZone=-08:00
@@ -55,7 +55,7 @@ ATTLOGStamp=0
 OPERLOGStamp=0
 ATTPHOTOStamp=0
 `
-    const logLine = `${deviceSerialNumber} initialization: ${responseText}`
+    const logLine = `${deviceSerialNumber} initialization...`
     fs.appendFile('devicelog.txt', logLine, function (err) {
         if (err) {
             log.println("Error initializing clocks with server: ", err)
@@ -90,18 +90,15 @@ app.post("/iclock/devicecmd", (req, res)=>{
 })
 
 
-
-
 const logData = (req, onSuccess)=>{
     const serialNumber  = req.query.SN
     const table = req.query.table
     const dataRow = req.query.Stamp
     //TODO: Extracts parts of the dataRow and save in the database
     
-    //postContent = JSON.stringify(req.body)
-    const logLine = `${serialNumber} ${table} ${dataRow}\n`
+    const bodyContent = JSON.stringify(req.body)
+    const logLine = `${serialNumber} ${table} ${dataRow} ${bodyContent}\n`
     console.log(logLine);
-
 
     fs.appendFile('devicelog.txt', logLine, function (err) {
         if (err) {
