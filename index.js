@@ -8,19 +8,28 @@ const fs = require('fs');
 
 const bodyParser = require('body-parser')
 
-var multer  = require('multer')
-var upload = multer()
-
 //set all responses to text/plain
 app.use(function (req, res, next) {
+    console.log("Body: ", req.body)
     console.log("Request: ", req.query)
     console.log("URL: ", req.url)
-    res.type("text/html")
+    res.type("text/plain")
     next()
 })
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(bodyParser.raw({type: 'application/octet-stream', limit : '100kb'}))
+
+app.use((req, res, next) => {
+    if (Buffer.isBuffer(req.body)) {
+        req.body = JSON.parse(req.body)
+        console.log("---------");
+        console.log(JSON.stringify(req.body));
+    }
+})
+
 
 //Index website
 app.get("/", (req, res)=> {
@@ -71,7 +80,15 @@ ATTPHOTOStamp=0
 
 //Sync data with server
 //Device logs data in the server
-app.post("/iclock/cdata", upload.single('PIN'), (req, res)=>{
+app.post("/iclock/cdata", (req, res)=>{
+
+    fs.appendFile('devicelog.txt', JSON.stringify(req.body), function (err) {
+        if (err) {
+            log.println("Error logging data: ", err)
+            return
+        }
+    });
+
     console.log(req.file);
     console.log(req.body);
     logData(req,()=>{
