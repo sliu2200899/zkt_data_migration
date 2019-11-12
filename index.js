@@ -8,6 +8,8 @@ const fs = require('fs');
 
 const bodyParser = require('body-parser')
 
+var multer  = require('multer')
+var upload = multer()
 
 //set all responses to text/plain
 app.use(function (req, res, next) {
@@ -68,7 +70,9 @@ ATTPHOTOStamp=0
 
 //Sync data with server
 //Device logs data in the server
-app.post("/iclock/cdata", (req, res)=>{
+app.post("/iclock/cdata", upload.single('PIN'), (req, res)=>{
+    console.log(req.file);
+    console.log(req.body);
     logData(req,()=>{
         res.send("OK")
     })
