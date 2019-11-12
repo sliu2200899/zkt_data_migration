@@ -6,6 +6,8 @@ const moment = require('moment')
 
 const fs = require('fs');
 
+const bodyParser = require('body-parser')
+
 
 //set all responses to text/plain
 app.use(function (req, res, next) {
@@ -13,6 +15,9 @@ app.use(function (req, res, next) {
     res.type("text/plain")
     next()
 })
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 //Index website
 app.get("/", (req, res)=> {
@@ -93,7 +98,7 @@ const logData = (req, onSuccess)=>{
     const dataRow = req.query.Stamp
     //TODO: Extracts parts of the dataRow and save in the database
     
-    queryContent = JSON.stringify(req.query())
+    postContent = JSON.stringify(req.body)
     const logLine = `${serialNumber} ${queryContent}\n`
     console.log(logLine);
 
