@@ -17,7 +17,7 @@ app.use(function (req, res, next) {
 })
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 //Index website
 app.get("/", (req, res)=> {
@@ -98,8 +98,8 @@ const logData = (req, onSuccess)=>{
     const dataRow = req.query.Stamp
     //TODO: Extracts parts of the dataRow and save in the database
     
-    postContent = JSON.stringify(req)
-    const logLine = `${serialNumber} ${postContent}\n`
+    //postContent = JSON.stringify(req.body)
+    const logLine = `${serialNumber} ${table} ${dataRow}\n`
     console.log(logLine);
 
 
