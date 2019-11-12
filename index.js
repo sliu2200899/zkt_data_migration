@@ -55,7 +55,7 @@ ATTLOGStamp=0
 OPERLOGStamp=0
 ATTPHOTOStamp=0
 `
-    const logLine = `${deviceSerialNumber} initialization...`
+    const logLine = `${deviceSerialNumber} initialization...\n`
     fs.appendFile('devicelog.txt', logLine, function (err) {
         if (err) {
             log.println("Error initializing clocks with server: ", err)
@@ -97,6 +97,7 @@ const logData = (req, onSuccess)=>{
     //TODO: Extracts parts of the dataRow and save in the database
     
     const bodyContent = JSON.stringify(req.body)
+    console.log(req)
     const logLine = `${serialNumber} ${table} ${dataRow} ${bodyContent}\n`
     console.log(logLine);
 
