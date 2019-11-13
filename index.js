@@ -10,26 +10,10 @@ const bodyParser = require('body-parser')
 
 //set all responses to text/plain
 app.use(function (req, res, next) {
-    console.log("Body: ", req.body)
-    console.log("Request: ", req.query)
-    console.log("URL: ", req.url)
     res.type("text/plain")
     next()
 })
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-app.use(bodyParser.raw({type: 'application/octet-stream', limit : '100kb'}))
-
-app.use((req, res, next) => {
-    if (Buffer.isBuffer(req.body)) {
-        req.body = JSON.parse(req.body)
-        console.log("---------");
-        console.log(JSON.stringify(req.body));
-    }
-})
-
+app.use(bodyParser.text());
 
 //Index website
 app.get("/", (req, res)=> {
@@ -82,15 +66,6 @@ ATTPHOTOStamp=0
 //Device logs data in the server
 app.post("/iclock/cdata", (req, res)=>{
 
-    fs.appendFile('devicelog.txt', JSON.stringify(req.body), function (err) {
-        if (err) {
-            log.println("Error logging data: ", err)
-            return
-        }
-    });
-
-    console.log(req.file);
-    console.log(req.body);
     logData(req,()=>{
         res.send("OK")
     })
@@ -116,14 +91,10 @@ const logData = (req, onSuccess)=>{
     const serialNumber  = req.query.SN
     const table = req.query.table
     const dataRow = req.query.Stamp
+    const bodyContent = req.body
     //TODO: Extracts parts of the dataRow and save in the database
-
-    const arr = dataRow.split('\t');
-    let pin = arr[0];
-    let other = arr[1];    
-    const bodyContent = JSON.stringify(req.body)
-    const logLine = `${serialNumber} ${table} ${dataRow} ${other}\n`
-    console.log(logLine);
+    
+    const logLine = `${serialNumber} ${table} ${dataRow}\n ${bodyContent}\n`
 
     fs.appendFile('devicelog.txt', logLine, function (err) {
         if (err) {
