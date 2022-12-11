@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/sliu2200899/zkt_data_migration#readme",
   "dependencies": {
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "moment": "^2.24.0"
   }
 }
